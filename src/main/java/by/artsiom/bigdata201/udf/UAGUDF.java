@@ -32,7 +32,9 @@ import java.util.stream.Collectors;
                 "  | Tablet        | Android 5.1                 | Chrome 40              |\n" +
                 "  | Desktop       | Linux Intel x86_64          | Chrome 59              |\n" +
                 "  | Game Console  | Windows 10.0                | Edge 13                |\n" +
-                "  +---------------+-----------------------------+------------------------+"
+                "  +---------------+-----------------------------+------------------------+\n" +
+                "  For more field names please take a look at " + 
+                "https://github.com/blueconic/browscap-java/blob/master/src/main/java/com/blueconic/browscap/BrowsCapField.java"
 )
 public class UAGUDF extends GenericUDF {
     private static List<String> fieldNames;
