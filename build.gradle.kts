@@ -23,6 +23,7 @@ dependencies {
 
     testCompile("junit", "junit", "4.12")
     testCompile("org.mockito", "mockito-core", "2.23.4")
+    testCompile("org.apache.hive", "hive-exec", hiveVersion)
 }
 
 configure<JavaPluginConvention> {
