@@ -9,7 +9,7 @@ group = "by.artsiom.bigdata201"
 version = "1.0"
 
 val hiveVersion: String by project
-val browscapVersion: String by project
+val bitwalkerVersion: String by project
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ repositories {
 dependencies {
     compileOnly("org.apache.hive", "hive-exec", hiveVersion)
 
-    compile("com.blueconic", "browscap-java", browscapVersion)
+    compile("eu.bitwalker", "UserAgentUtils", bitwalkerVersion)
 
     testCompile("junit", "junit", "4.12")
     testCompile("org.mockito", "mockito-core", "2.23.4")
