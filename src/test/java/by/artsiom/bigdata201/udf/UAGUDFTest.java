@@ -74,8 +74,9 @@ public class UAGUDFTest {
                 new GenericUDF.DeferredJavaObject(UA)
         });
 
-        checkField((StandardStructObjectInspector) resultInspector, row, "DEVICE_TYPE", "Desktop");
-        checkField((StandardStructObjectInspector) resultInspector, row, "PARENT", "Chrome 58.0");
+        checkField((StandardStructObjectInspector) resultInspector, row, "device", "Computer");
+        checkField((StandardStructObjectInspector) resultInspector, row, "os", "Linux");
+        checkField((StandardStructObjectInspector) resultInspector, row, "browser", "Chrome 58");
     }
 
     private void checkField(StandardStructObjectInspector resultInspector, Object row, String fieldName, String expectedValue) {
