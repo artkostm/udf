@@ -13,6 +13,7 @@ import org.apache.hadoop.io.Text;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Description(
@@ -51,9 +52,10 @@ public class UAGUDF extends GenericUDF {
         }
         useragentOI = (StringObjectInspector) oi;
 
+		final List<String> fieldNames = Arrays.asList(BROWSER, OS, DEVICE);
         return ObjectInspectorFactory.getStandardStructObjectInspector(
-                Arrays.asList(BROWSER, OS, DEVICE),
-                Collections.nCopies(3, PrimitiveObjectInspectorFactory.writableStringObjectInspector)
+                fieldNames,
+                Collections.nCopies(fieldNames.size(), PrimitiveObjectInspectorFactory.writableStringObjectInspector)
         );
     }
 
@@ -61,7 +63,7 @@ public class UAGUDF extends GenericUDF {
     public Object evaluate(final DeferredObject[] args) throws HiveException {
         return Optional.ofNullable(useragentOI.getPrimitiveJavaObject(args[0].get()))
                 .map(uaString -> {
-                    UserAgent ua = UserAgent.parseUserAgentString(uaString);
+                    final UserAgent ua = UserAgent.parseUserAgentString(uaString);
                     return new Text[] {
                             new Text(ua.getBrowser().getName()),
                             new Text(ua.getOperatingSystem().getName()),
