@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Description(
         name = "UAGUDF",
-        value = "_FUNC_(str) - parses any user agent string into separate fields.",
+        value = "_FUNC_(str) - parses any user agent string into separate fields (os, device, browser).",
         extended = "Example:" +
                 "> SELECT uagudf(useragent).device, \n" +
                 "         uagudf(useragent).os, \n" +
@@ -30,9 +30,7 @@ import java.util.Optional;
                 "  | Tablet        | Android 5.1                 | Chrome 40              |\n" +
                 "  | Desktop       | Linux Intel x86_64          | Chrome 59              |\n" +
                 "  | Game Console  | Windows 10.0                | Edge 13                |\n" +
-                "  +---------------+-----------------------------+------------------------+\n" +
-                "  For more field names please take a look at " + 
-                "https://github.com/blueconic/browscap-java/blob/master/src/main/java/com/blueconic/browscap/BrowsCapField.java"
+                "  +---------------+-----------------------------+------------------------+\n" 
 )
 public class UAGUDF extends GenericUDF {
     private static String BROWSER = "browser";
@@ -75,6 +73,6 @@ public class UAGUDF extends GenericUDF {
 
     @Override
     public String getDisplayString(final String[] children) {
-        return "Parses the user agent string into all possible pieces.";
+        return "Parses the user agent string into OS, Browser, and Device pieces.";
     }
 }
