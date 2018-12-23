@@ -2,7 +2,7 @@
 
 Build jar: ```./gradlew shadowJar```
 
-To use the udf with HIVE use the following script:
+To use the udf with HIVE just add the following script:
 
 ```sql
 ADD JAR /path/to/udf.jar;
@@ -46,6 +46,7 @@ WHERE b3.rnk = 1
 
 <details><summary>Output</summary>
 <p>
+
 ```csv
 aba     Windows XP      Computer        Internet Explorer 7                                                                                                               
 akesu   Windows XP      Computer        Internet Explorer 8                                                                                                                             
@@ -382,5 +383,6 @@ zigong  Windows XP      Computer        Internet Explorer 8
 ziyang  Windows XP      Computer        Internet Explorer 8                                                                                                                             
 zunyi   Windows XP      Computer        Internet Explorer 7                                                                                                                             
 ```
+
 </p>
 </details>
