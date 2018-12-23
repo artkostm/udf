@@ -437,8 +437,27 @@ Usage of Hadoop containers|Employ existing containers as well.|Extra containers 
 
 To enable vectorization we can use the `hive.vectorized.execution.enabled` hive setting and set it to true.
 
-Here are the examples of query execution in the ambari hive ui and the zeppelin notebook (the notebook can be found `scripts/top_ua_for_each_city.hql`):
+Here are the examples of query execution in the ambari hive ui and the zeppelin notebook (the notebook can be found `scripts/top_ua_for_each_city_notebook.json`):
 
 ![hive ui](screenshots/ambari_hive_ui.png "hive ui")
 
 ![zeppelin notebook](screenshots/zeppelin.png "zeppelin notebook")
+
+Execution time table:
+
+|Attempt|	1	|2	|3	|4	|5	|6	|7	|8	|9|	10|
+Plain text MR (no partitions, no index, no vectorization)	1274	1609	1735	1194	1217	1236	1233	1287	1185	1182
+Plain text Tez (no partitions, no index, no vectorization)	1103	1094	1039	1068	1088	1082	1044	1101	1057	1065
+Plain text Spark (no partitions, no index, no vectorization)	1204	1223	1147	1167	1155	1121	1128	1133	1132	1121
+ORC MR (partitions, no index, no vectorization)	469	473	487	502	482	485	479	477	480	474
+ORC MR (partitions, vectorization, index)	439	461	440	441	450	443	446	435	438	443
+ORC Tez (partitions, no index, no vectorization)	446	468	448	453	450	447	459	467	437	448
+ORC Tez (partitions, vectorization, index)	380	371	389	388	397	383	370	362	368	374
+ORC Spark (partitions, no index, no vectorization)	459	444	442	476	458	473	460	464	458	464
+ORC Spark (partitions, vectorization, index)	386	398	388	395	403	401	405	386	393	396
+
+Below you can see the visualisations for all metrics together and for the metrics that have optimisations.
+
+![All](screenshots/all.png "All")
+
+![With optimisations only](screenshots/with_optimisations.png "With optimisation only")
