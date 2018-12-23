@@ -398,7 +398,16 @@ Here are the list of a few schemas of partitioning/bucketing for the dataset (th
 
  All of these schemas are appropriate to corresponding tasks and works on the dataset. For example, if we need analyze the data by some time range it is good to use the last schema proposed by me. In case of the `most popular os, device, browser for each city` we should consider only the second one as we are working only with `cityId` and `useragent` columns here and can effectively distribute work for each partition (cityId) among the map/reducers in our cluter. We won't get any execution time advantage by using other schemas, we will only lose. Partitioning by any other column does not make sense because of the large partitions number. We have to remember that too many partitions can lead to performance degradation.
 
- Plain text data takes 22.6 Gb of disc space while the same dataset in ORC takes only 3.2 Gb. It is huge difference.
+ Let's change file format to save space. I chouse ORC because this file format has more interesting features that we can use to improve execution time and save space.
+
+ To create a table stored as ORC:
+
+ ```bash
+ hive -d BIDS_TABLE_NAME=bids_orc \
+ 	-d BIDS_EXT_TABLE_NAME=bids \
+ 	-f create_partitioned_table_bids_orc.hql
+ ```
+By running `hdfs dfs -du -s -h /path/to/hive/warehouse/table_name` we can see that plain text data takes 22.6 Gb of disc space while the same dataset in ORC takes only 3.2 Gb. It is huge difference.
 
 We can create an infex for the cityId column by running:
 
@@ -411,15 +420,25 @@ hive -d INDEX_NAME=cityIdIdx \
 Actually, indexes in Hive are not recommended. The reason for this is ORC. ORC has build in Indexes which allow the format to skip blocks of data during read, they also support Bloom filters. Together this pretty much replicates what Hive Indexes did and they do it automatically in the data format without the need to manage an external table (which is essentially what happens in indexes). Also, ORC allows us to read only columns needed.
 
 Tez offers a reusable, flexible and extensible platform in which random data-flow oriented frameworks are supported, whereas replicated functionalities are avoided. Tez APIs let frameworks model both logical as well as physical semantics of the data flow graphs in a clear manner, with nominal code.
-Following significant contributions are made by Apache Tez:
+
+Following significant contributions are made by Apache Tez and let us to have performance improvements in comparizon with MapReduce:
 - Permits model computation as a Directed Acyclic Graph (DAG)
 - Uncovers APIs to progress the DAG definition in a dynamic way
 - Offers an efficient and scalable execution of advanced features
 
 On the basis of different parameters, a number of differences can be observed between Tez and MapReduce as shown in the following table:
+
 | Parameters |  Apache Tez  | MapReduce |
 |:-----------|:-------------|:----------|
 Processing Model|specific Map phase and we possibly will have several reduce phases|Prior to the reduce phase, a map phase is always needed by MapReduce
 Response time|Low|High
 Temporary data storage|More efficient.|Not efficient. After every map and reduce phase, it keeps temporary data into HDFS.
 Usage of Hadoop containers|Employ existing containers as well.|Extra containers are needed for further jobs.
+
+To enable vectorization we can use the `hive.vectorized.execution.enabled` hive setting and set it to true.
+
+Here are the examples of query execution in the ambari hive ui and the zeppelin notebook (the notebook can be found `scripts/top_ua_for_each_city.hql`):
+
+![hive ui](screenshots/ambari_hive_ui.png "hive ui")
+
+![zeppelin notebook](screenshots/zeppelin.png "zeppelin notebook")
