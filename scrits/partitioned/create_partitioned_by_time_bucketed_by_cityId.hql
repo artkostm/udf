@@ -7,6 +7,7 @@ CREATE TABLE ${BIDS_TABLE_NAME} (
 	useragent string,
 	ip string,
 	regionId int,
+	cityId int,
 	adexchange int,
 	domain string,
 	url string,
@@ -31,14 +32,15 @@ ROW FORMAT DELIMITED
 
 SET hive.exec.dynamic.partition=true;
 SET hive.exec.dynamic.partition.mode=nonstrict;
-SET hive.enforce.bucketing = true;
+SET hive.enforce.bucketing=true;
 
-INSERT OVERWRITE TABLE ${BIDS_TABLE_NAME} PARTITION (to_date(time)) SELECT 
+INSERT OVERWRITE TABLE ${BIDS_TABLE_NAME} PARTITION (date_col) SELECT 
 	bidID,
 	ipinyouid,
 	useragent,
 	ip,
 	regionId,
+	cityId,
 	adexchange,
 	domain,
 	url,
@@ -53,6 +55,5 @@ INSERT OVERWRITE TABLE ${BIDS_TABLE_NAME} PARTITION (to_date(time)) SELECT
 	biddingprice,
 	advertiserid,
 	userprofileids,
-	cityId,
-	time,
+	to_date(time) as date_col,
 FROM ${BIDS_EXT_TABLE_NAME};

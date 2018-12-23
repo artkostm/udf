@@ -34,7 +34,7 @@ ADD JAR ${UA_JAR_PATH};
 
 CREATE TEMPORARY FUNCTION ua AS 'by.artsiom.bigdata201.udf.UAGUDF';
 
-INSERT OVERWRITE TABLE ${BIDS_TABLE_NAME} PARTITION (cityId, ua(useragent).os) SELECT 
+INSERT OVERWRITE TABLE ${BIDS_TABLE_NAME} PARTITION (cityId, os) SELECT 
 	bidID,
 	time,
 	ipinyouid,
@@ -55,5 +55,6 @@ INSERT OVERWRITE TABLE ${BIDS_TABLE_NAME} PARTITION (cityId, ua(useragent).os) S
 	advertiserid,
 	userprofileids,
 	regionId,
-	cityId
+	cityId,
+	ua(useragent).os as os
 FROM ${BIDS_EXT_TABLE_NAME};
