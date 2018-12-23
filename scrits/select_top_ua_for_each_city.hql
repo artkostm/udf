@@ -1,5 +1,6 @@
 SET spark.master=yarn-client;
 SET hive.execution.engine=${HIVE_EXEC_ENGINE};
+SET hive.vectorized.execution.enabled=${VECTORIZATION};
 
 ADD JAR ${UA_JAR_PATH};
 
