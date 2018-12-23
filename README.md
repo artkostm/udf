@@ -386,3 +386,26 @@ zunyi   Windows XP      Computer        Internet Explorer 7
 
 </p>
 </details>
+
+### Task 2
+
+Here are the list of a few schemas of partitioning/bucketing for the dataset (the script can be found in the `scripts/partitioned` directory:
+
+ - partitioned by city id and os name
+ - partitioned by city id
+ - partitioned by region id and city id
+ - partitioned by time and bucketed by city
+
+ All of these schemas are appropriate to corresponding tasks and works on the dataset. For example, if we need analyze the data by some time range it is good to use the last schema proposed by me. In case of the `most popular os, device, browser for each city` we should consider only the second one as we are working only with `cityId` and `useragent` columns here and can effectively distribute work for each partition (cityId) among the map/reducers in our cluter. We won't get any execution time advantage by using other schemas, we will only lose. Partitioning by any other column does not make sense because of the large partitions number. We have to remember that too many partitions can lead to performance degradation.
+
+ Plain text data takes 22.6 Gb of disc space while the same dataset in ORC takes only 3.2 Gb. It is huge difference.
+
+We can create an infex for the cityId column by running:
+
+```bash
+hive -d INDEX_NAME=cityIdIdx \
+	-d TABLE_NAME=bids \
+	-d COL_NAME=cityId \
+	-f create_index.hql
+```
+Actually, indexes in Hive are not recommended. The reason for this is ORC. ORC has build in Indexes which allow the format to skip blocks of data during read, they also support Bloom filters. Together this pretty much replicates what Hive Indexes did and they do it automatically in the data format without the need to manage an external table (which is essentially what happens in indexes). Also, ORC allows us to read only columns neaded.
