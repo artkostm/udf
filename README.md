@@ -417,9 +417,9 @@ Following significant contributions are made by Apache Tez:
 - Offers an efficient and scalable execution of advanced features
 
 On the basis of different parameters, a number of differences can be observed between Tez and MapReduce as shown in the following table:
-|Parameters|Apache Tez|MapReduce|
+| Parameters |  Apache Tez  | MapReduce |
 |:-----------|:-------------|:----------|
-|Processing Model|specific Map phase and we possibly will have several reduce phases|Prior to the reduce phase, a map phase is always needed by MapReduce|
-|Response time|Low|High|
-|Temporary data storage|More efficient.|Not efficient. After every map and reduce phase, it keeps temporary data into HDFS.|
-|Usage of Hadoop containers|Employ existing containers as well.|Extra containers are needed for further jobs.|
+Processing Model|specific Map phase and we possibly will have several reduce phases|Prior to the reduce phase, a map phase is always needed by MapReduce
+Response time|Low|High
+Temporary data storage|More efficient.|Not efficient. After every map and reduce phase, it keeps temporary data into HDFS.
+Usage of Hadoop containers|Employ existing containers as well.|Extra containers are needed for further jobs.
