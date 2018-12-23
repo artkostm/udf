@@ -29,6 +29,12 @@ ROW FORMAT DELIMITED
 
 SET hive.exec.dynamic.partition=true;
 SET hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.dynamic.partition=true;
+set hive.exec.dynamic.partition.mode=nonstrict;
+SET hive.exec.max.dynamic.partitions.pernode=375;
+SET hive.exec.max.dynamic.partitions=375;
+SET hive.exec.max.created.files=700;
+set mapred.reduce.tasks=200;
 
 ADD JAR ${UA_JAR_PATH};
 
