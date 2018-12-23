@@ -445,7 +445,8 @@ Here are the examples of query execution in the ambari hive ui and the zeppelin 
 
 Execution time table:
 
-|Attempt|	1	|2	|3	|4	|5	|6	|7	|8	|9|	10|
+Attempt	1	2	3	4	5	6	7	8	9	10
+---	---	---	---	---	---	---	---	---	---	---
 Plain text MR (no partitions, no index, no vectorization)	1274	1609	1735	1194	1217	1236	1233	1287	1185	1182
 Plain text Tez (no partitions, no index, no vectorization)	1103	1094	1039	1068	1088	1082	1044	1101	1057	1065
 Plain text Spark (no partitions, no index, no vectorization)	1204	1223	1147	1167	1155	1121	1128	1133	1132	1121
