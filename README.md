@@ -408,4 +408,18 @@ hive -d INDEX_NAME=cityIdIdx \
 	-d COL_NAME=cityId \
 	-f create_index.hql
 ```
-Actually, indexes in Hive are not recommended. The reason for this is ORC. ORC has build in Indexes which allow the format to skip blocks of data during read, they also support Bloom filters. Together this pretty much replicates what Hive Indexes did and they do it automatically in the data format without the need to manage an external table (which is essentially what happens in indexes). Also, ORC allows us to read only columns neaded.
+Actually, indexes in Hive are not recommended. The reason for this is ORC. ORC has build in Indexes which allow the format to skip blocks of data during read, they also support Bloom filters. Together this pretty much replicates what Hive Indexes did and they do it automatically in the data format without the need to manage an external table (which is essentially what happens in indexes). Also, ORC allows us to read only columns needed.
+
+Tez offers a reusable, flexible and extensible platform in which random data-flow oriented frameworks are supported, whereas replicated functionalities are avoided. Tez APIs let frameworks model both logical as well as physical semantics of the data flow graphs in a clear manner, with nominal code.
+Following significant contributions are made by Apache Tez:
+- Permits model computation as a Directed Acyclic Graph (DAG)
+- Uncovers APIs to progress the DAG definition in a dynamic way
+- Offers an efficient and scalable execution of advanced features
+
+On the basis of different parameters, a number of differences can be observed between Tez and MapReduce as shown in the following table:
+|Parameters|Apache Tez|MapReduce|
+=================================
+Processing Model|specific Map phase and we possibly will have several reduce phases|Prior to the reduce phase, a map phase is always needed by MapReduce
+Response time|Low|High
+Temporary data storage|More efficient.|Not efficient. After every map and reduce phase, it keeps temporary data into HDFS.
+Usage of Hadoop containers|Employ existing containers as well.|Extra containers are needed for further jobs.
